@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Authentication</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(to bottom, #1a252f 0%, #2c3e50 100%);
+        }
+
+        /* Industrial buildings background */
+        .industrial-buildings {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 5%;
+        }
+
+        .building {
+            background: #2c3e50;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .building1 {
+            width: 120px;
+            height: 250px;
+            background: linear-gradient(to top, #1a252f, #2c3e50);
+        }
+
+        .building2 {
+            width: 150px;
+            height: 300px;
+            background: linear-gradient(to top, #16202a, #2c3e50);
+        }
+
+        .building3 {
+            width: 100px;
+            height: 200px;
+            background: linear-gradient(to top, #1a252f, #2c3e50);
+        }
+
+        .building4 {
+            width: 130px;
+            height: 280px;
+            background: linear-gradient(to top, #16202a, #2c3e50);
+        }
+
+        .building5 {
+            width: 110px;
+            height: 220px;
+            background: linear-gradient(to top, #1a252f, #2c3e50);
+        }
+
+        /* Windows on buildings */
+        .building::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            right: 10px;
+            bottom: 20px;
+            background-image: 
+                repeating-linear-gradient(0deg, 
+                    transparent, 
+                    transparent 15px, 
+                    rgba(255,255,255,0.1) 15px, 
+                    rgba(255,255,255,0.1) 30px),
+                repeating-linear-gradient(90deg, 
+                    transparent, 
+                    transparent 15px, 
+                    rgba(255,255,255,0.1) 15px, 
+                    rgba(255,255,255,0.1) 30px);
+        }
+
+        /* Worker silhouettes */
+        .workers {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 200px;
+            z-index: 5;
+        }
+
+        .worker {
+            position: relative;
+        }
+
+        .worker-body {
+            width: 40px;
+            height: 80px;
+            background: #000;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .worker-head {
+            width: 30px;
+            height: 30px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: -25px;
+            left: 5px;
+        }
+
+        .worker-helmet {
+            width: 35px;
+            height: 20px;
+            background: #f39c12;
+            border-radius: 50%;
+            position: absolute;
+            top: -30px;
+            left: 2.5px;
+            z-index: -1;
+        }
+
+        /* Authentication card */
+        .auth-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 40px;
+            width: 500px;
+            text-align: center;
+        }
+
+        .auth-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .document-info {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 25px;
+            text-align: left;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #495057;
+            width: 150px;
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: #212529;
+            font-size: 16px;
+            flex: 1;
+        }
+
+        /* Ground */
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to top, #0f1419, #1a252f);
+            z-index: 1;
+        }
+
+        /* Fog effect */
+        .fog {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, rgba(26,37,47,0.8), transparent);
+            z-index: 2;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .auth-card {
+                width: 90%;
+                padding: 30px 20px;
+            }
+
+            .auth-title {
+                font-size: 24px;
+            }
+
+            .info-label {
+                width: 120px;
+                font-size: 12px;
+            }
+
+            .info-value {
+                font-size: 14px;
+            }
+
+            .workers {
+                gap: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Industrial buildings -->
+    <div class="industrial-buildings">
+        <div class="building building1"></div>
+        <div class="building building2"></div>
+        <div class="building building3"></div>
+        <div class="building building4"></div>
+        <div class="building building5"></div>
+    </div>
+
+    <!-- Ground -->
+    <div class="ground"></div>
+
+    <!-- Fog effect -->
+    <div class="fog"></div>
+
+    <!-- Worker silhouettes -->
+    <div class="workers">
+        <div class="worker">
+            <div class="worker-helmet"></div>
+            <div class="worker-head"></div>
+            <div class="worker-body"></div>
+        </div>
+        <div class="worker">
+            <div class="worker-helmet"></div>
+            <div class="worker-head"></div>
+            <div class="worker-body"></div>
+        </div>
+    </div>
+
+    <!-- Authentication card -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">Authenticate your document</h1>
+            <div class="document-info">
+                <div class="info-row">
+                    <span class="info-label">Deliverable Id:</span>
+                    <span class="info-value">148-2025-028646-EN</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Name:</span>
+                    <span class="info-value">HAMID KHAN KHA MUHAMMAD</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Training Type:</span>
+                    <span class="info-value">SCAFFOLDING ERECTOR AND DISMANTLER</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add subtle animation to buildings
+        document.addEventListener('DOMContentLoaded', function() {
+            const buildings = document.querySelectorAll('.building');
+            buildings.forEach((building, index) => {
+                building.style.opacity = '0';
+                building.style.transform = 'translateY(20px)';
+                building.style.transition = `all 0.6s ease-out ${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    building.style.opacity = '1';
+                    building.style.transform = 'translateY(0)';
+                }, 100);
+            });
+
+            // Animate workers
+            const workers = document.querySelectorAll('.worker');
+            workers.forEach((worker, index) => {
+                worker.style.opacity = '0';
+                worker.style.transform = 'translateY(20px)';
+                worker.style.transition = `all 0.6s ease-out ${0.5 + index * 0.2}s`;
+                
+                setTimeout(() => {
+                    worker.style.opacity = '1';
+                    worker.style.transform = 'translateY(0)';
+                }, 100);
+            });
+
+            // Animate auth card
+            const authCard = document.querySelector('.auth-card');
+            authCard.style.opacity = '0';
+            authCard.style.transform = 'translateY(-20px)';
+            authCard.style.transition = 'all 0.8s ease-out 0.8s';
+            
+            setTimeout(() => {
+                authCard.style.opacity = '1';
+                authCard.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
