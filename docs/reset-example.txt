@@ -43,12 +43,21 @@ git reset --soft HEAD~1
 
 # Check status
 git status
+# Output:
+# On branch main
+# Changes to be committed:
+#   (use "git restore --staged <file>..." to unstage)
+#         new file:   app.js
 
 # Verify commit history
 git log --oneline
+# Output:
+# * 4d5e6f7 (HEAD -> main) Add blue background
+# * 7g8h9i0 Add HTML structure
 
 # Check files (app.js still exists but not committed)
 ls
+# Output: app.js  index.html  styles.css
 
 
 
@@ -65,13 +74,22 @@ git reset HEAD~1
 
 # Check status
 git status
-
+# Output:
+# On branch main
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git restore <file>..." to discard changes)
+#         new file:   app.js
 
 # Verify commit history
 git log --oneline
+# Output:
+# * 4d5e6f7 (HEAD -> main) Add blue background
+# * 7g8h9i0 Add HTML structure
 
 # Check files
 ls
+# Output: app.js  index.html  styles.css
 
 
 
@@ -95,6 +113,9 @@ git status
 
 # Verify commit history
 git log --oneline
+# Output:
+# * 4d5e6f7 (HEAD -> main) Add blue background
+# * 7g8h9i0 Add HTML structure
 
 # Check files
 ls
