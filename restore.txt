@@ -1,0 +1,3 @@
+Some text
+
+something that need to remove in staged area
